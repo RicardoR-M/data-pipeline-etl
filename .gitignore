@@ -1,0 +1,8 @@
+venv/
+.env
+!.env.example
+# Project exclude paths
+data/*
+reports/*
+querys/*
+logs/*
