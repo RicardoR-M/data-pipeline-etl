@@ -1,11 +1,11 @@
-# Data Processing Pipeline
+# 📊 Data Processing Pipeline
 
-## Project Overview
+## 🔎 Project Overview
 
 This project is a simple ETL (Extract, Transform, Load) pipeline designed to handle various data sources, process them, and store the results in a database. It's built with a focus on
 flexibility and ease of use.
 
-## Key Features
+## ✨ Key Features
 
 - Support for multiple file types (CSV, Excel, HTML tables)
 - Customizable data cleaning and processing steps
@@ -13,7 +13,7 @@ flexibility and ease of use.
 - Environment variable usage for configuration
 - Error handling and basic logging
 
-## Project Structure
+## 🛠️ Project Structure
 
 ```
 project/
@@ -52,7 +52,7 @@ project/
 └── README.md
 ```
 
-## Installation
+## 🚀 Installation
 
 1. Clone the repository:
 
@@ -73,7 +73,7 @@ project/
 - INTERNALDASH_URL
 - INTRANET_BASE_URL
 
-## Configuration
+## ⚙️Configuration
 
 The pipeline uses YAML configuration files located directly in the `reports/` directory. These files define the data sources, processing steps, and other parameters for each ETL job.
 
@@ -185,7 +185,7 @@ cleaning:
       length: 30
 ```
 
-## Usage
+## 📋 Usage
 
 1. Create or modify YAML configuration files directly in the reports/ directory to define your ETL jobs.
 
@@ -196,7 +196,7 @@ python main.py
 ```
 This will execute the pipeline based on the configurations in your YAML files.
 
-## Key Components
+## ☑️ Key Components
 
 ### Downloaders
 
@@ -210,14 +210,14 @@ Manages data cleaning and transformation for different file types.
 
 Orchestrates the entire data processing workflow.
 
-## Contributing
+## 🤝 Contributing
 
 If you have suggestions for improvements or bug fixes, feel free to open an issue or submit a pull request.
 
-## License
+## 📄 License
 
 This project is open-source and available under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Acknowledgments
+## 🎖️ Acknowledgments
 
 Thanks to all the open-source libraries and tools that made this project possible.
