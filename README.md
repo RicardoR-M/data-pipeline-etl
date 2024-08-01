@@ -1,5 +1,7 @@
 # 📊 Data Processing Pipeline
 
+![Python 3.10.11](https://img.shields.io/badge/Python-3.10.11-blue.svg)
+
 ## 🔎 Project Overview
 
 This project is a simple ETL (Extract, Transform, Load) pipeline designed to handle various data sources, process them, and store the results in a database. It's built with a focus on
