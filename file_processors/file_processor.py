@@ -36,6 +36,7 @@ class FileProcessor(ABC):
             - length: The length to truncate the column names to.
         - remove_specialchars_from_column_names: Removes special characters from the column names.
         - normalize_column_names: Normalizes the column names.
+            - upper: Whether to convert the column names to uppercase, default false.
         - remove_duplicate_rows: Removes duplicate rows.
 
         :param file_path: Path to the file or folder to be processed.
@@ -321,15 +322,15 @@ class FileProcessor(ABC):
                 if column in self.df.columns:
                     self.df[column] = self.df[column].str.extract(r'(\d+)')
 
-    def normalize_column_names(self):
+    def normalize_column_names(self, upper: bool = False):
         """
         Normalizes the column names in the DataFrame.
         """
         if self.df is not None:
-            self.df.columns = [self._normalize_name(col) for col in self.df.columns]
+            self.df.columns = [self._normalize_name(col, upper) for col in self.df.columns]
 
     @staticmethod
-    def _normalize_name(txt: str) -> str:
+    def _normalize_name(txt: str, upper: bool) -> str:
         """
         Normalizes a string by removing special characters and converting to uppercase.
 
@@ -340,7 +341,8 @@ class FileProcessor(ABC):
         txt = normalize('NFD', txt).encode('ascii', 'ignore').decode()
         txt = sub('[^0-9a-zA-Z&_]+', ' ', txt)
         txt = sub(' +', ' ', txt)
-        txt = txt.strip().upper().replace(" ", '_')
+        txt = txt.strip().replace(" ", '_')
+        txt = txt.upper() if upper else txt.lower()
         return txt
 
     def remove_duplicate_rows(self):
