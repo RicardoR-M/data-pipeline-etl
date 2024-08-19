@@ -46,6 +46,7 @@ class Pipeline:
         total_time = timeit.default_timer()
         q_errors = 0
         q_reportes = 0
+        reportes_error = []
 
         for config_file in config_files:
             with open(config_file, 'r', encoding='utf-8') as file:
@@ -63,6 +64,7 @@ class Pipeline:
                         q_reportes += 1
                     except Exception as e:
                         q_errors += 1
+                        reportes_error.append(f"{service['servicio']} - {service['sub_servicio']}")
                         self.console.log(
                             f"Error processing {service['servicio']} - {service['sub_servicio']}: {e}", style='red')
                         # save trace stack to file in the log folder
@@ -78,6 +80,7 @@ class Pipeline:
         self.console.log(f"[bold green]Total reports: {q_reportes}", style='green')
         if q_errors > 0:
             self.console.log(f"[bold red]Total errors: {q_errors}", style='red')
+            self.console.log(f"[bold red]Reports with errors: {reportes_error}", style='red')
 
     def _process_report(self, service):
         """
