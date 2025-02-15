@@ -1,6 +1,7 @@
 import glob
 import os
 import timeit
+import re
 
 import yaml
 
@@ -24,6 +25,7 @@ class Pipeline:
 
     :param config_dir: The directory containing the configuration files.
     """
+
     def __init__(self, config_dir):
         self.config_dir = config_dir
         self.console = Console()
@@ -247,6 +249,13 @@ class Pipeline:
         :param config_files: A list of configuration file paths.
         """
         for config_file in config_files:
-            if basename(config_file).upper().startswith('[P]'):
-                new_name = config_file.replace('[p]', '').replace('[P]', '')
+            base_name = basename(config_file).upper()
+            if '[PP]' in base_name:
+                continue  # Skip permanent priority files
+
+            # Use regex to remove [P] while preserving other tags
+            new_name = re.sub(r'\[P]', '', config_file, flags=re.IGNORECASE)
+            new_name = re.sub(r'\[([^]]*)P([^]]*)]', r'[\1\2]', new_name, flags=re.IGNORECASE)
+            new_name = new_name.replace('[]', '')  # Remove empty brackets if any
+            if new_name != config_file:
                 os.rename(config_file, new_name)
