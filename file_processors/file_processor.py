@@ -351,3 +351,13 @@ class FileProcessor(ABC):
         """
         if self.df is not None:
             self.df.drop_duplicates(inplace=True)
+
+    def replace_column_names(self, old_names: List[str], new_names: List[str]):
+        """
+        Replaces old column names with new column names.
+
+        :param old_names: The old column names to replace.
+        :param new_names: The new column names to replace with.
+        """
+        if self.df is not None:
+            self.df.rename(columns=dict(zip(old_names, new_names)), inplace=True)
