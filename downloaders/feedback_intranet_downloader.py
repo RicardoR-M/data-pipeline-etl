@@ -22,7 +22,7 @@ class FeedbackIntranetDownloader(Downloader):
         self.page.get_by_placeholder('Usuario').fill(self.user)
         self.page.get_by_placeholder('Contraseña').fill(self.password)
         self.page.get_by_text('INGRESAR').click()
-        self.page.wait_for_selector('#dvNombreEmpleadoMaster', state='visible')
+        self.page.wait_for_selector('#dvNombreEmpleadoMaster', state='visible', timeout=90000)
         # Custom url para la descarga de feedback
         self.page.goto(feedback_url)
         # selecciona el filtro por FECHA
