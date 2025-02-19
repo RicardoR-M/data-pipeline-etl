@@ -14,7 +14,6 @@ from downloaders.qualtrics_survey_data_downloader import QualtricsSurveyDataDown
 from file_processors.csv_processor import CSVProcessor
 from file_processors.customFormacionConsolidado_processor import CustomFormacionConsolidadoProcessor
 from file_processors.excel_processor import ExcelProcessor
-from file_processors.htmltable_processor import HTMLTableProcessor
 from rich.console import Console
 from os.path import basename
 
@@ -157,7 +156,6 @@ class Pipeline:
         processor_classes = {
             'csv': CSVProcessor,
             'excel': ExcelProcessor,
-            'htmltable': HTMLTableProcessor,
             'customFormacionConsolidado': CustomFormacionConsolidadoProcessor
         }
 

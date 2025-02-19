@@ -1,6 +1,10 @@
+import csv
+
 import requests
 from os import getenv, makedirs, path
 from downloaders.downloader import Downloader
+import pandas as pd
+from bs4 import BeautifulSoup
 
 
 class InternalDashDownloader(Downloader):
@@ -8,6 +12,7 @@ class InternalDashDownloader(Downloader):
         super().__init__(**kwargs)
         self.servicio_id = servicio_id
         self.tipo_reporte = tipo_reporte
+        self.encoding = kwargs.get('encoding', 'utf8')
 
     def download(self) -> str:
         if self.tipo_reporte not in ['fijo', 'dinamico']:
@@ -34,14 +39,20 @@ class InternalDashDownloader(Downloader):
 
         r = requests.get(url=url, allow_redirects=True, stream=True, timeout=660)
 
-        full_path = self.generate_fullpath_name('xls', f'{self.tipo_reporte}_{self.servicio_id}')
+        full_path = self.generate_fullpath_name('csv', f'{self.tipo_reporte}_{self.servicio_id}')
 
         # Ensure the directory exists
         makedirs(path.dirname(full_path), exist_ok=True)
 
-        with open(full_path, 'wb') as xls:
-            for chunk in r.iter_content(chunk_size=1024):
-                # writing one chunk at a time
-                if chunk:
-                    xls.write(chunk)
+        columns = [th.get_text() for th in BeautifulSoup(r.content, 'html.parser').find('table').find_all('th')]
+
+        df = pd.read_html(
+            r.content,
+            flavor='bs4',
+            keep_default_na=False,
+            encoding=self.encoding,
+            converters={col: str for col in columns})[0]  # Force all columns to strings
+
+        df.to_csv(full_path, index=False, quoting=csv.QUOTE_ALL, doublequote=True, encoding=self.encoding)
+
         return str(full_path)
