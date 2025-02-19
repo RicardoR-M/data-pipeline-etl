@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Union
 from os.path import join
 from pathlib import Path
+from os import getenv
 
 from babel.dates import format_datetime
 from pendulum import now, timezone, today, parse, DateTime, Date, instance, date
@@ -32,7 +33,7 @@ class Downloader(ABC):
         self.browser: Union[Browser, None] = None
         self.context: Union[BrowserContext, None] = None
         self.page: Union[Page, None] = None
-        self.root_download_dir = kwargs.get('root_download_dir', './data')
+        self.root_download_dir = kwargs.get('root_download_dir', getenv('DOWNLOAD_FOLDER', './data'))
         self.service = kwargs.get('servicio', 'temp')
         self.sub_service = kwargs.get('sub_servicio', 'temp')
         self.downloader_name = kwargs.get('name', 'temp')
