@@ -89,7 +89,12 @@ class CustomFormacionConsolidadoProcessor(FileProcessor):
         df = df.drop(df.columns[tipo_ing_col + 1: tipo_ing_col + 42], axis=1)
         df_asistencia_fechas = df_asistencia_fechas.dropna(axis=1, how='all')
 
-        df[['DNI', 'TELÉFONO', 'TIPO INGRESO']] = df[['DNI', 'TELÉFONO', 'TIPO INGRESO']].applymap(self.clean_value)
+        target_columns = ['DNI', 'TELÉFONO', 'TIPO INGRESO']
+        # Find which of these columns ACTUALLY EXIST in the DataFrame
+        cols_to_clean = [col for col in target_columns if col in df.columns]
+
+        if cols_to_clean:
+            df[cols_to_clean] = df[cols_to_clean].applymap(self.clean_value)
 
         columnas = ['NRO. RESUMEN', 'DNI', 'NOMBRES']
 
