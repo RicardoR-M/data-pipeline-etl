@@ -72,7 +72,7 @@ class QualtricsDownloader(Downloader):
 
             try:
                 # new qualtrics UI
-                self.page.get_by_test_id("download-icon").click(timeout=3000)
+                self.page.get_by_test_id("download-icon").click(timeout=6000)
             except TimeoutError:
                 # old qualtrics UI
                 self.page.locator("#export-options-button").click()
