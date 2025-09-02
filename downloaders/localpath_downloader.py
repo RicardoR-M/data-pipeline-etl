@@ -9,10 +9,15 @@ class LocalPathDownloader(Downloader):
     def __init__(self, local_fullpath: str, **kwargs):
         super().__init__(**kwargs)
         self.local_fullpath = local_fullpath
+        self.local_destination = kwargs.get('local_destination', None)
 
     def download(self) -> str:
         if not Path(self.local_fullpath).exists():
             raise FileNotFoundError(f'File not found: {self.local_fullpath}')
+
+        if self.local_destination:
+            # If a local destination is specified, copy the file to that destination
+            copy2(self.local_fullpath, self.local_destination)
 
         # get local_fullpath file extension
         file_extension = Path(self.local_fullpath).suffix[1:]
