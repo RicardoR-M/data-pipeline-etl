@@ -33,6 +33,8 @@ class FeedbackIntranetDownloader(Downloader):
         #wait until button #btnBuscar is clickable
         self.page.wait_for_timeout(1000)
         self.page.wait_for_selector('#btnBuscar', state='visible') #.wait_for_element_state(state='enabled')
+        self.page.get_by_text('Todos').click()  # selecciona "Todos"
+        self.page.wait_for_timeout(1000)
         self.page.get_by_text('Buscar').click()
 
         selector = '#tb_Servicio > tbody > tr:nth-child(2) > td:nth-child(1) > center > a > img'
