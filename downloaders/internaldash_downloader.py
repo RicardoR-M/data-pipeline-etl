@@ -37,7 +37,7 @@ class InternalDashDownloader(Downloader):
         else:
             raise ValueError('Invalid tipo_reporte')
 
-        r = requests.get(url=url, allow_redirects=True, stream=True, timeout=660)
+        r = requests.get(url=url, allow_redirects=True, stream=True, timeout=660, verify=False)
 
         full_path = self.generate_fullpath_name('csv', f'{self.tipo_reporte}_{self.servicio_id}')
 
