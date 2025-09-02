@@ -68,7 +68,7 @@ class Downloader(ABC):
         """
         self.pw = sync_playwright().start()
         self.browser = self.pw.chromium.launch(headless=self.headless, slow_mo=1000)
-        self.context = self.browser.new_context()
+        self.context = self.browser.new_context(ignore_https_errors=True)
         self.page = self.context.new_page()
         if self.trace_pw:
             self.context.tracing.start(screenshots=True, snapshots=True)
